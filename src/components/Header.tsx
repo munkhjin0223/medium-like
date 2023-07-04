@@ -1,11 +1,9 @@
-'use client';
-
 import siteMetadata from '@/data/siteMetadata';
 import Link from 'next/link';
 import Image from 'next/image';
 import headerNavLinks from '@/data/headerNavLinks';
 
-export default function Header() {
+export default async function Header() {
   return (
     <header className='flex items-center justify-between py-10'>
       <div>
