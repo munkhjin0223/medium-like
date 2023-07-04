@@ -19,7 +19,7 @@ export default async function Page() {
       <ul className='divide-y divide-gray-200 dark:divide-gray-700'>
         {!posts.length && 'No posts found.'}
         {posts.map((post) => (
-          <Post post={post} />
+          <Post key={post.id} post={post} />
         ))}
       </ul>
     </div>
