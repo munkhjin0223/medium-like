@@ -1,4 +1,4 @@
-import { Post } from '@/types/post';
+import { Post } from '@/types';
 import Link from 'next/link';
 import { FunctionComponent } from 'react';
 import Tag from '@/components/Tag';

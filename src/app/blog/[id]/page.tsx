@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { Post as TPost } from '@/types/post';
+import { Post as TPost } from '@/types';
 import { notFound } from 'next/navigation';
 
 interface PageProps {
