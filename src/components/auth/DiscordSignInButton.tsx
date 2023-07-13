@@ -9,7 +9,7 @@ const DiscordSignInButton = () => {
   const callbackUrl = searchParams.get('callbackUrl') || '/';
 
   return (
-    <Button className='w-full bg-slate-600' onClick={() => signIn('google', { callbackUrl })}>
+    <Button className='w-full bg-slate-600' onClick={() => signIn('discord', { callbackUrl })}>
       Continue with Discord
     </Button>
   );
