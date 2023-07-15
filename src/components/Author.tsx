@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
-import { User as TUser, Post as TPost } from '@/types/index';
+import { Post as TPost } from '@prisma/client';
+import { User as TUser } from '@/types/index';
 import Post from '@/components/blog/Post';
 import { notFound } from 'next/navigation';
 

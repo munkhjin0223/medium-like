@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { Post as TPost } from '@/types';
+import { Post as TPost } from '@prisma/client';
 import { notFound } from 'next/navigation';
 
 interface PageProps {

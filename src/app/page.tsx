@@ -1,9 +1,13 @@
 import Post from '@/components/blog/Post';
-import { getPosts } from '@/lib/mongo/posts';
-import { Post as TPost } from '@/types';
+import { getPosts } from '@/lib/prisma/posts';
+import { Post as TPost } from '@prisma/client';
 
 export default async function Page() {
-  const { posts }: { posts: TPost[] } = await getPosts();
+  const { posts = [], error }: { posts?: TPost[]; error?: any } = await getPosts({});
+
+  if (error) {
+    throw error;
+  }
 
   return (
     <div className='divide-y divide-gray-200 dark:divide-gray-700'>

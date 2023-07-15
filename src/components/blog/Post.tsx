@@ -1,14 +1,13 @@
-import { Post } from '@/types';
+import { Post as TPost } from '@prisma/client';
 import Link from 'next/link';
 import { FunctionComponent } from 'react';
-import Tag from '@/components/Tag';
 
 interface ItemProps {
-  post: Post;
+  post: TPost;
 }
 
 const Item: FunctionComponent<ItemProps> = ({ post }) => {
-  const { id, title, body, tags = ['multi-author', 'next-js', 'feature'] } = post;
+  const { id, title, body } = post;
 
   return (
     <li key={id} className='py-12'>
@@ -28,11 +27,6 @@ const Item: FunctionComponent<ItemProps> = ({ post }) => {
                     {title}
                   </Link>
                 </h2>
-                <div className='flex flex-wrap'>
-                  {tags.map((tag) => (
-                    <Tag key={tag} text={tag} />
-                  ))}
-                </div>
               </div>
               <div className='prose max-w-none text-gray-500 dark:text-gray-400'>{body}</div>
             </div>
