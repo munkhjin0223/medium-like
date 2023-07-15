@@ -1,6 +1,7 @@
-import clientPromise from '@/lib/mongo-test/client';
+// @ts-ignore
+import clientPromise from '@/lib/mongo/client';
 
-let client;
+let client: any;
 let db: any;
 let posts: any;
 
@@ -18,10 +19,6 @@ async function init() {
 (async () => {
   await init();
 })();
-
-//////////////
-/// TODOS ///
-/////////////
 
 export async function getPosts() {
   if (!posts) await init();
