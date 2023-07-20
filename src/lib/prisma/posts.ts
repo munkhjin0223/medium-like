@@ -6,7 +6,7 @@ export async function getPosts(args: Prisma.PostFindManyArgs) {
     const result = await prisma.post.findMany(args);
 
     return { posts: result };
-  } catch (error) {
+  } catch (error: any) {
     return { error };
   }
 }
@@ -18,7 +18,7 @@ export async function getPostById(id: string) {
     });
 
     return { post: result };
-  } catch (error) {
+  } catch (error: any) {
     return { error };
   }
 }

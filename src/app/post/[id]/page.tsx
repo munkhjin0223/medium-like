@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { Post as TPost } from '@prisma/client';
 import { notFound } from 'next/navigation';
+import { getPostById, getPosts } from '@/lib/prisma/posts';
 
 interface PageProps {
   params: {
@@ -9,34 +9,32 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params: { id } }: { params: { id: string } }) {
-  const blog = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`).then((res) => res.json());
+  const { post } = await getPostById(id);
 
   return {
-    title: blog.title,
-    description: blog.body,
+    title: post?.title,
+    description: post?.body,
   };
 }
 
 export async function generateStaticParams() {
-  const posts = await fetch('https://jsonplaceholder.typicode.com/posts').then((res) => res.json());
+  const { posts = [] } = await getPosts({ take: 100 });
 
   return posts.map((post: any) => ({
-    id: post.id.toString(),
+    id: post.id,
   }));
 }
 
 const Page: FunctionComponent<PageProps> = async ({ params: { id } }) => {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+  const { post, error } = await getPostById(id);
 
-  if (res.status === 404) {
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  if (!post) {
     notFound();
   }
-
-  if (res.status !== 200) {
-    throw new Error('Алдаа гарлаа');
-  }
-
-  const post: TPost = await res.json();
 
   return (
     <>
