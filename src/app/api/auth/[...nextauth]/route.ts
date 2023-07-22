@@ -1,5 +1,7 @@
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import client from '@/lib/prisma';
 
 const handler = NextAuth({
   providers: [
@@ -8,9 +10,10 @@ const handler = NextAuth({
       clientSecret: process.env.DISCORD_CLIENT_SECRET || '',
     }),
   ],
+  adapter: PrismaAdapter(client),
   pages: {
     signIn: '/signin',
   },
-});
+} as NextAuthOptions);
 
 export { handler as GET, handler as POST };
