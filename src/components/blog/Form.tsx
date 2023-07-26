@@ -11,6 +11,7 @@ import { Textarea } from '../ui/textarea';
 import { Post } from '@prisma/client';
 import { addPost, editPost, removePost } from '@/app/actions/posts';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 const formSchema = z.object({
   title: z
@@ -28,6 +29,12 @@ interface BlogFormProps {
 }
 
 const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
+  const { data: session } = useSession();
+
+  if (!session) {
+    return 'Та эхлээд нэвтэрнэ үү';
+  }
+
   const router = useRouter();
 
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
@@ -68,7 +75,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
       // Create
       addPost({
         ...values,
-        userId: 1,
+        userId: session?.user?.id || '',
       })
         .then(({ post, error }) => {
           setInfoMessage('Амжилттай хадгаллаа');

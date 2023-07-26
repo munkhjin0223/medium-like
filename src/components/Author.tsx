@@ -1,27 +1,15 @@
 import { FunctionComponent } from 'react';
-import { User as TUser } from '@/types/index';
 import Post from '@/components/blog/Post';
-import { notFound } from 'next/navigation';
 import { getPosts } from '@/lib/prisma/posts';
+import { DefaultUser } from 'next-auth';
+import { Button } from '@/components/ui/button';
 
 interface AuthorProps {
-  authorId: number;
+  user: DefaultUser;
 }
 
-const Author: FunctionComponent<AuthorProps> = async ({ authorId }) => {
-  const userRes = await fetch(`https://jsonplaceholder.typicode.com/users/${authorId}`);
-
-  if (userRes.status === 404) {
-    notFound();
-  }
-
-  if (userRes.status !== 200) {
-    throw new Error('Хэрэглэгчийн мэдээллийг унших үед алдаа гарлаа');
-  }
-
-  const user: TUser = await userRes.json();
-
-  const { posts = [], error } = await getPosts({ where: { userId: authorId }, take: 10 });
+const Author: FunctionComponent<AuthorProps> = async ({ user }) => {
+  const { posts = [], error } = await getPosts({ where: { userId: user.id }, take: 10 });
 
   if (error) {
     throw new Error('Холбоотой блогуудыг унших үед алдаа гарлаа');
