@@ -29,12 +29,6 @@ interface BlogFormProps {
 }
 
 const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
-  const { data: session } = useSession();
-
-  if (!session) {
-    return 'Та эхлээд нэвтэрнэ үү';
-  }
-
   const router = useRouter();
 
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
@@ -58,6 +52,12 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
       clearTimeout(timeout);
     };
   }, [infoMessage]);
+
+  const { data: session } = useSession();
+
+  if (!session) {
+    return 'Та эхлээд нэвтэрнэ үү';
+  }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.

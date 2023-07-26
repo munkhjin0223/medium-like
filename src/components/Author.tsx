@@ -2,13 +2,13 @@ import { FunctionComponent } from 'react';
 import Post from '@/components/blog/Post';
 import { getPosts } from '@/lib/prisma/posts';
 import { DefaultUser } from 'next-auth';
-import { Button } from '@/components/ui/button';
 
 interface AuthorProps {
   user: DefaultUser;
+  isEditable?: boolean;
 }
 
-const Author: FunctionComponent<AuthorProps> = async ({ user }) => {
+const Author: FunctionComponent<AuthorProps> = async ({ user, isEditable }) => {
   const { posts = [], error } = await getPosts({ where: { userId: user.id }, take: 10 });
 
   if (error) {
@@ -26,7 +26,7 @@ const Author: FunctionComponent<AuthorProps> = async ({ user }) => {
       <ul className='divide-y divide-gray-200 dark:divide-gray-700'>
         {!posts.length && 'No posts found.'}
         {posts.map((post) => (
-          <Post isEditable={true} key={post.id} post={post} />
+          <Post isEditable={isEditable} key={post.id} post={post} />
         ))}
       </ul>
     </div>

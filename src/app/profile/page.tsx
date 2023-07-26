@@ -13,7 +13,7 @@ const Page: FunctionComponent<PageProps> = async () => {
     redirect('/signin');
   }
 
-  return <Author user={session.user} />;
+  return <Author user={session.user} isEditable={true} />;
 };
 
 export default Page;
