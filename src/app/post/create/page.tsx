@@ -1,4 +1,4 @@
-import Form from '@/components/blog/Form';
+import Form from '@/components/post/Form';
 import { FunctionComponent } from 'react';
 
 interface CreateProps {}

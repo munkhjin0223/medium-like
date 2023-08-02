@@ -1,5 +1,7 @@
+const removeImports = require('next-remove-imports')();
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = removeImports({
   experimental: {
     serverActions: true,
   },
@@ -11,6 +13,6 @@ const nextConfig = {
       },
     ],
   },
-};
+});
 
 module.exports = nextConfig;

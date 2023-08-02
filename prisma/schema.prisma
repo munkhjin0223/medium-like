@@ -8,10 +8,11 @@ datasource db {
 }
 
 model Post {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  body   String
-  title  String
-  userId String @db.ObjectId
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  description String?
+  body        String
+  title       String
+  userId      String  @db.ObjectId
 
   @@map("posts")
 }

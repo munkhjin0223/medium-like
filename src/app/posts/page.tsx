@@ -1,4 +1,4 @@
-import Post from '@/components/blog/Post';
+import Post from '@/components/post/Post';
 import Pagination from '@/components/common/Pagination';
 import { getPosts } from '@/lib/prisma/posts';
 import { FunctionComponent } from 'react';
@@ -9,7 +9,7 @@ interface PageProps {
   };
 }
 
-const POSTS_PER_PAGE = 1;
+const POSTS_PER_PAGE = 3;
 
 const Page: FunctionComponent<PageProps> = async ({ searchParams }) => {
   const page = parseInt(searchParams.page || '1');

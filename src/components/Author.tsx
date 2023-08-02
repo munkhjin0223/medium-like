@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import Post from '@/components/blog/Post';
+import Post from '@/components/post/Post';
 import { getPosts } from '@/lib/prisma/posts';
 import { DefaultUser } from 'next-auth';
 

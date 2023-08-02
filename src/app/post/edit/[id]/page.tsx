@@ -1,4 +1,4 @@
-import Form from '@/components/blog/Form';
+import Form from '@/components/post/Form';
 import { getPostById } from '@/lib/prisma/posts';
 import { Post } from '@prisma/client';
 import { FunctionComponent } from 'react';

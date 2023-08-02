@@ -67,6 +67,15 @@ const SignInButton = () => {
               </MenubarItem>
               <MenubarItem>
                 <Link
+                  href='/post/create'
+                  className={'inline-flex items-center gap-6 px-[34px] py-2 text-sm text-stone-400 dark:text-stone-500'}
+                >
+                  <Cog8ToothIcon className='h-5 w-5 text-stone-400' />
+                  <span>Пост оруулах</span>
+                </Link>
+              </MenubarItem>
+              <MenubarItem>
+                <Link
                   href='/profile'
                   className={'inline-flex items-center gap-6 px-[34px] py-2 text-sm text-stone-400 dark:text-stone-500'}
                 >

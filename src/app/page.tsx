@@ -1,4 +1,4 @@
-import Post from '@/components/blog/Post';
+import Post from '@/components/post/Post';
 import { getPosts } from '@/lib/prisma/posts';
 import { Post as TPost } from '@prisma/client';
 

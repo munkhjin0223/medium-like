@@ -12,6 +12,7 @@ import { Post } from '@prisma/client';
 import { addPost, editPost, removePost } from '@/app/actions/posts';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import Editor from '../common/Editor';
 
 const formSchema = z.object({
   title: z
@@ -19,9 +20,7 @@ const formSchema = z.object({
       required_error: 'Гарчиг оруулна уу',
     })
     .max(50),
-  body: z.string({
-    required_error: 'Агуулга оруулна уу',
-  }),
+  description: z.string(),
 });
 
 interface BlogFormProps {
@@ -32,12 +31,13 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
   const router = useRouter();
 
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
+  const [body, setBody] = useState(post?.body || '');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: post?.title,
-      body: post?.body,
+      description: post?.description || '',
     },
   });
 
@@ -62,9 +62,14 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    const finalValues = {
+      ...values,
+      body,
+    };
+
     if (post) {
       // Update
-      editPost(post.id, values)
+      editPost(post.id, finalValues)
         .then(() => {
           setInfoMessage('Амжилттай хадгаллаа');
         })
@@ -73,10 +78,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
         });
     } else {
       // Create
-      addPost({
-        ...values,
-        userId: session?.user?.id || '',
-      })
+      addPost({ ...finalValues, userId: session?.user?.id || '' })
         .then(({ post, error }) => {
           setInfoMessage('Амжилттай хадгаллаа');
 
@@ -125,17 +127,18 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
           />
           <FormField
             control={form.control}
-            name='body'
+            name='description'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Агуулга</FormLabel>
+                <FormLabel>Хураангуй</FormLabel>
                 <FormControl>
-                  <Textarea className='h-96' {...field} />
+                  <Textarea {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <Editor body={body} setBody={setBody} />
           <div>
             <Button onClick={onDelete} className='float-left' type='button' variant={'destructive'}>
               Устгах

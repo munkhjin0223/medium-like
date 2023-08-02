@@ -9,7 +9,7 @@ interface ItemProps {
 }
 
 const Item: FunctionComponent<ItemProps> = ({ post, isEditable }) => {
-  const { id, title, body } = post;
+  const { id, title, description } = post;
 
   return (
     <li key={id} className='py-12'>
@@ -30,11 +30,11 @@ const Item: FunctionComponent<ItemProps> = ({ post, isEditable }) => {
                   </Link>
                 </h2>
               </div>
-              <div className='prose max-w-none text-gray-500 dark:text-gray-400'>{body}</div>
+              <div className='prose max-w-none text-gray-500 dark:text-gray-400'>{description}</div>
             </div>
             <div className='text-base font-medium leading-6'>
               <Link
-                href={`/blog/${id}`}
+                href={`/post/${id}`}
                 className='text-primary-500 hover:text-primary-600 dark:hover:text-primary-400'
                 aria-label={`Read "${title}"`}
               >
