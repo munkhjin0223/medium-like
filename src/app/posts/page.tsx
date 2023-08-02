@@ -9,7 +9,7 @@ interface PageProps {
   };
 }
 
-export const POSTS_PER_PAGE = 1;
+const POSTS_PER_PAGE = 1;
 
 const Page: FunctionComponent<PageProps> = async ({ searchParams }) => {
   const page = parseInt(searchParams.page || '1');
