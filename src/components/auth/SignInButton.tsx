@@ -12,7 +12,9 @@ import {
   MenubarTrigger,
 } from '@/components/ui/menubar';
 
-import { ArrowRightOnRectangleIcon, Cog8ToothIcon } from '@heroicons/react/24/solid';
+import ArrowRightOnRectangleIcon from '@heroicons/react/24/solid/ArrowRightOnRectangleIcon';
+import UserCircleIcon from '@heroicons/react/24/solid/UserCircleIcon';
+import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 
 const SignInButton = () => {
   const { data: session } = useSession();
@@ -67,22 +69,23 @@ const SignInButton = () => {
               </MenubarItem>
               <MenubarItem>
                 <Link
-                  href='/post/create'
+                  href='/profile'
                   className={'inline-flex items-center gap-6 px-[34px] py-2 text-sm text-stone-400 dark:text-stone-500'}
                 >
-                  <Cog8ToothIcon className='h-5 w-5 text-stone-400' />
-                  <span>Пост оруулах</span>
+                  <UserCircleIcon className='h-5 w-5 text-stone-400' />
+                  <span>Профайл</span>
                 </Link>
               </MenubarItem>
               <MenubarItem>
                 <Link
-                  href='/profile'
+                  href='/post/create'
                   className={'inline-flex items-center gap-6 px-[34px] py-2 text-sm text-stone-400 dark:text-stone-500'}
                 >
-                  <Cog8ToothIcon className='h-5 w-5 text-stone-400' />
-                  <span>Manage Account</span>
+                  <PlusIcon className='h-5 w-5 text-stone-400' />
+                  <span>Пост оруулах</span>
                 </Link>
               </MenubarItem>
+
               <MenubarSeparator />
               <MenubarItem>
                 <button
@@ -90,7 +93,7 @@ const SignInButton = () => {
                   onClick={() => signOut()}
                 >
                   <ArrowRightOnRectangleIcon className='h-5 w-5 text-stone-400' />
-                  <span>Sign Out</span>
+                  <span>Гарах</span>
                 </button>
               </MenubarItem>
             </MenubarContent>
@@ -101,7 +104,7 @@ const SignInButton = () => {
           className='rounded-md border border-stone-300 px-3 py-1 text-sm dark:border-stone-600'
           onClick={() => signIn()}
         >
-          Sign In
+          Нэвтрэх
         </button>
       )}
     </>
