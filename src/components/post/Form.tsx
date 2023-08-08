@@ -10,7 +10,6 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { Post } from '@prisma/client';
-import { addPost, editPost, removePost } from '@/actions/posts';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Editor from '../common/Editor';
@@ -73,7 +72,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
 
     if (post) {
       // Update
-      editPost(post.id, finalValues)
+      fetch(`/api/post/${post.id}`, { method: 'PUT', body: JSON.stringify(finalValues) })
         .then(() => {
           setInfoMessage('Амжилттай хадгаллаа');
         })
@@ -82,7 +81,8 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
         });
     } else {
       // Create
-      addPost({ ...finalValues, userId: session?.user?.id || '' })
+      fetch('/api/post', { method: 'POST', body: JSON.stringify(finalValues) })
+        .then((res) => res.json())
         .then(({ post, error }) => {
           setInfoMessage('Амжилттай хадгаллаа');
 
@@ -101,7 +101,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
   function onDelete() {
     if (post) {
       if (confirm('Та устгахыг хүсч байна уу?'))
-        removePost(post.id)
+        fetch(`/api/post/${post.id}`, { method: 'DELETE' })
           .then(() => router.push('/profile'))
           .catch((error) => setInfoMessage(error.message));
     }
