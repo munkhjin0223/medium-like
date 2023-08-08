@@ -7,7 +7,8 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '../ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Textarea } from '@/components/ui/textarea';
 import { Post } from '@prisma/client';
 import { addPost, editPost, removePost } from '@/actions/posts';
 import { useRouter } from 'next/navigation';
@@ -21,6 +22,7 @@ const formSchema = z.object({
     })
     .max(50),
   description: z.string(),
+  published: z.boolean(),
 });
 
 interface BlogFormProps {
@@ -38,6 +40,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
     defaultValues: {
       title: post?.title,
       description: post?.description || '',
+      published: post?.published || false,
     },
   });
 
@@ -64,6 +67,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
     // ✅ This will be type-safe and validated.
     const finalValues = {
       ...values,
+      publishedAt: values.published ? new Date() : null,
       body,
     };
 
@@ -135,6 +139,20 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
                   <Textarea {...field} />
                 </FormControl>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='published'
+            render={({ field }) => (
+              <FormItem className='flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4'>
+                <FormControl>
+                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                </FormControl>
+                <div className='space-y-1 leading-none'>
+                  <FormLabel>Нийтлэх эсэх</FormLabel>
+                </div>
               </FormItem>
             )}
           />

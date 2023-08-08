@@ -15,7 +15,7 @@ const Page: FunctionComponent<PageProps> = async ({ searchParams }) => {
   const page = parseInt(searchParams.page || '1');
   const skip = page * POSTS_PER_PAGE - POSTS_PER_PAGE;
 
-  const { posts = [], count = 0, error } = await getPosts({ take: POSTS_PER_PAGE, skip });
+  const { posts = [], count = 0, error } = await getPosts({ take: POSTS_PER_PAGE, skip, where: { published: true } });
 
   const totalPages = Math.ceil(count / POSTS_PER_PAGE);
 
@@ -27,11 +27,11 @@ const Page: FunctionComponent<PageProps> = async ({ searchParams }) => {
     <div className='divide-y divide-gray-200 dark:divide-gray-700'>
       <div className='space-y-2 pt-6 pb-8 md:space-y-5'>
         <h1 className='text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14'>
-          All Posts
+          Бүх постууд
         </h1>
       </div>
       <ul>
-        {!posts.length && 'No posts found.'}
+        {!posts.length && <div className='py-4'>Пост олдсонгүй.</div>}
         {posts.map((post) => (
           <Post key={post.id} post={post} />
         ))}
