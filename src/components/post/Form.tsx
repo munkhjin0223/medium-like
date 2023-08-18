@@ -11,7 +11,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { Post } from '@prisma/client';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import Editor from '../common/Editor';
 
 const formSchema = z.object({
@@ -55,12 +54,6 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
     };
   }, [infoMessage]);
 
-  const { data: session } = useSession();
-
-  if (!session) {
-    return 'Та эхлээд нэвтэрнэ үү';
-  }
-
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
@@ -72,7 +65,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
 
     if (post) {
       // Update
-      fetch(`/api/post/${post.id}`, { method: 'PUT', body: JSON.stringify(finalValues) })
+      fetch(`/api/user/post/${post.id}`, { method: 'PUT', body: JSON.stringify(finalValues) })
         .then(() => {
           setInfoMessage('Амжилттай хадгаллаа');
         })
@@ -81,7 +74,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
         });
     } else {
       // Create
-      fetch('/api/post', { method: 'POST', body: JSON.stringify(finalValues) })
+      fetch('/api/user/post', { method: 'POST', body: JSON.stringify(finalValues) })
         .then((res) => res.json())
         .then(({ post, error }) => {
           setInfoMessage('Амжилттай хадгаллаа');
@@ -90,7 +83,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
             throw new Error(error.message);
           }
 
-          router.push(`/post/edit/${post?.id}`);
+          router.push(`/user/post/edit/${post?.id}`);
         })
         .catch((error) => {
           setInfoMessage(error.message);
@@ -101,8 +94,8 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
   function onDelete() {
     if (post) {
       if (confirm('Та устгахыг хүсч байна уу?'))
-        fetch(`/api/post/${post.id}`, { method: 'DELETE' })
-          .then(() => router.push('/profile'))
+        fetch(`/api/user/post/${post.id}`, { method: 'DELETE' })
+          .then(() => router.push('/user/profile'))
           .catch((error) => setInfoMessage(error.message));
     }
   }

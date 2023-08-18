@@ -1,15 +1,7 @@
-import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
-import { nextOptions } from '../../auth/[...nextauth]/route';
 import { deletePost, getPostById, updatePost } from '@/lib/prisma/posts';
 
 export async function PUT(request: NextRequest, { params: { id } }: { params: { id: string } }) {
-  const session = await getServerSession(nextOptions);
-
-  if (!session) {
-    return new Response('Unauthorized', { status: 401 });
-  }
-
   const post = await getPostById(id);
 
   if (!post) {
@@ -24,12 +16,6 @@ export async function PUT(request: NextRequest, { params: { id } }: { params: { 
 }
 
 export async function DELETE(_request: NextRequest, { params: { id } }: { params: { id: string } }) {
-  const session = await getServerSession(nextOptions);
-
-  if (!session) {
-    return new Response('Unauthorized', { status: 401 });
-  }
-
   const post = await getPostById(id);
 
   if (!post) {

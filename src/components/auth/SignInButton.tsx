@@ -69,7 +69,7 @@ const SignInButton = () => {
               </MenubarItem>
               <MenubarItem>
                 <Link
-                  href='/profile'
+                  href='/user/profile'
                   className={'inline-flex items-center gap-6 px-[34px] py-2 text-sm text-stone-400 dark:text-stone-500'}
                 >
                   <UserCircleIcon className='h-5 w-5 text-stone-400' />
@@ -78,7 +78,7 @@ const SignInButton = () => {
               </MenubarItem>
               <MenubarItem>
                 <Link
-                  href='/post/create'
+                  href='/user/post/create'
                   className={'inline-flex items-center gap-6 px-[34px] py-2 text-sm text-stone-400 dark:text-stone-500'}
                 >
                   <PlusIcon className='h-5 w-5 text-stone-400' />
