@@ -47,7 +47,7 @@ const Item: FunctionComponent<ItemProps> = ({ post, isEditable }) => {
             <div>
               {isEditable && (
                 <Button>
-                  <Link href={`/post/edit/${post.id}`}>Засах</Link>
+                  <Link href={`/user/post/edit/${post.id}`}>Засах</Link>
                 </Button>
               )}
             </div>
