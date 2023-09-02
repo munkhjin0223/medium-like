@@ -17,6 +17,8 @@ model Post {
   createdAt   DateTime  @default(now())
   publishedAt DateTime?
 
+  coverImage String?
+
   published Boolean @default(false)
 
   @@map("posts")

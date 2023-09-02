@@ -12,6 +12,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Post } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import Editor from '../common/Editor';
+import { Label } from '../ui/label';
+import Image from 'next/image';
 
 const formSchema = z.object({
   title: z
@@ -61,6 +63,8 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
       ...values,
       publishedAt: values.published ? new Date() : null,
       body,
+      coverImage:
+        'https://plus.unsplash.com/premium_photo-1692833836979-b1a39c998635?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY5MzY1MjgzMg&ixlib=rb-4.0.3&q=80&w=1080',
     };
 
     if (post) {
@@ -122,6 +126,12 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
               </FormItem>
             )}
           />
+          <div className='grid w-full max-w-sm items-center gap-1.5'>
+            <Label htmlFor='picture'>Зураг</Label>
+            <Input id='picture' type='file' />
+            {post?.coverImage && <Image src={post.coverImage} alt={post.title} width={200} height={200} />}
+          </div>
+
           <FormField
             control={form.control}
             name='description'

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import dayjs from 'dayjs';
 import { FunctionComponent } from 'react';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 interface ItemProps {
   post: TPost;
@@ -10,20 +11,23 @@ interface ItemProps {
 }
 
 const Item: FunctionComponent<ItemProps> = ({ post, isEditable }) => {
-  const { id, title, description, publishedAt } = post;
+  const { id, title, description, publishedAt, coverImage } = post;
 
   const formattedDate = dayjs(publishedAt).format('YYYY-MM-DD HH:mm:ss');
 
   return (
     <li key={id} className='py-12'>
       <article>
-        <div className='space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0'>
-          <dl>
-            <dt className='sr-only'>Нийтэлсэн огноо</dt>
-            <dd className='text-base font-medium leading-6 text-gray-500 dark:text-gray-400'>
-              <time dateTime={formattedDate}>{formattedDate}</time>
-            </dd>
-          </dl>
+        <div className='flex gap-6'>
+          <div>
+            {coverImage && <Image src={coverImage} alt={title} width={200} height={200} />}
+            <dl>
+              <dt className='sr-only'>Нийтэлсэн огноо</dt>
+              <dd className='text-base font-medium leading-6 text-gray-500 dark:text-gray-400'>
+                <time dateTime={formattedDate}>{formattedDate}</time>
+              </dd>
+            </dl>
+          </div>
           <div className='space-y-5 xl:col-span-3'>
             <div className='space-y-6'>
               <div>
