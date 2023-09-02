@@ -15,6 +15,10 @@ const nextConfig = removeImports({
         protocol: 'https',
         hostname: 'plus.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'medium-like-bucket.s3.ap-southeast-1.amazonaws.com',
+      },
     ],
   },
 });

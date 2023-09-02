@@ -34,6 +34,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
 
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
   const [body, setBody] = useState(post?.body || '');
+  const [coverImage, setCoverImage] = useState(post?.coverImage || '');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,8 +64,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
       ...values,
       publishedAt: values.published ? new Date() : null,
       body,
-      coverImage:
-        'https://plus.unsplash.com/premium_photo-1692833836979-b1a39c998635?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY5MzY1MjgzMg&ixlib=rb-4.0.3&q=80&w=1080',
+      coverImage,
     };
 
     if (post) {
@@ -78,7 +78,10 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
         });
     } else {
       // Create
-      fetch('/api/user/post', { method: 'POST', body: JSON.stringify(finalValues) })
+      fetch('/api/user/post', {
+        method: 'POST',
+        body: JSON.stringify(finalValues),
+      })
         .then((res) => res.json())
         .then(({ post, error }) => {
           setInfoMessage('Амжилттай хадгаллаа');
@@ -104,6 +107,24 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
     }
   }
 
+  const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    const formDate = new FormData();
+    formDate.append('file', file);
+
+    fetch('/api/upload', {
+      method: 'POST',
+      body: formDate,
+    }).then((res) => {
+      res.json().then(({ url }) => {
+        setCoverImage(url);
+      });
+    });
+  };
+
   return (
     <>
       <h1 className='text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-3xl md:leading-14'>
@@ -128,8 +149,8 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({ post }) => {
           />
           <div className='grid w-full max-w-sm items-center gap-1.5'>
             <Label htmlFor='picture'>Зураг</Label>
-            <Input id='picture' type='file' />
-            {post?.coverImage && <Image src={post.coverImage} alt={post.title} width={200} height={200} />}
+            <Input id='picture' type='file' onChange={onChangeFile} />
+            {coverImage && <Image src={coverImage} alt={'Cover image'} width={200} height={200} />}
           </div>
 
           <FormField
