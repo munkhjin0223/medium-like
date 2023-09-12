@@ -1,3 +1,11 @@
+## Хэрхэн ажлуулах вэ?
+
+`1. cp .env.sample .env`
+
+`2. yarn install эвсэл npm install`
+
+`3. yarn dev эвсэл npm run dev`
+
 ## next-auth related schema
 
 ```
