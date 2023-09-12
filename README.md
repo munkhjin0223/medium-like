@@ -2,9 +2,11 @@
 
 `1. cp .env.sample .env`
 
-`2. yarn install эвсэл npm install`
+`2. .env дээр шаардлагатай enviroment variable-уудыг тохируулах`
 
-`3. yarn dev эвсэл npm run dev`
+`3. yarn install эвсэл npm install`
+
+`4. yarn dev эвсэл npm run dev`
 
 ## next-auth related schema
 
