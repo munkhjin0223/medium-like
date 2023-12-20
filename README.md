@@ -1,3 +1,5 @@
+# Next.js App router хичээлд ашиглагдах эх код
+
 ## Хэрхэн ажлуулах вэ?
 
 `1. cp .env.sample .env`
