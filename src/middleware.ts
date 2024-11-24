@@ -1,14 +1,8 @@
-import { withAuth } from 'next-auth/middleware';
+import { auth } from '@/lib/auth';
+import { NextRequest } from 'next/server';
 
-export default withAuth(
-  // `withAuth` augments your `Request` with the user's token.
-  function middleware(req) {},
-  {
-    callbacks: {
-      authorized: ({ token }) => !!token,
-    },
-    secret: process.env.NEXTAUTH_SECRET,
-  }
-);
+export default auth(async function middleware(req: NextRequest) {
+  // Your custom middleware logic goes here
+});
 
 export const config = { matcher: ['/user/:path*', '/api/user/:path*'] };

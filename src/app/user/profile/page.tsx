@@ -1,12 +1,11 @@
 import { FunctionComponent } from 'react';
 import Author from '@/components/Author';
-import { getServerSession } from 'next-auth';
-import { nextOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 
 interface PageProps {}
 
 const Page: FunctionComponent<PageProps> = async () => {
-  const session = await getServerSession(nextOptions);
+  const session = await auth();
 
   return <Author user={session?.user} isEditable={true} />;
 };
