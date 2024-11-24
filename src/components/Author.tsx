@@ -1,10 +1,9 @@
 import { FunctionComponent } from 'react';
 import Post from '@/components/post/Post';
 import { getPosts } from '@/lib/prisma/posts';
-import { DefaultUser } from 'next-auth';
 
 interface AuthorProps {
-  user?: DefaultUser;
+  user?: any;
   isEditable?: boolean;
 }
 

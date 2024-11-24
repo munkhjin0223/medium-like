@@ -19,6 +19,8 @@ import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 const SignInButton = () => {
   const { data: session } = useSession();
 
+  console.log(session);
+
   return (
     <>
       {session ? (
