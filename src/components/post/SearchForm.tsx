@@ -1,23 +1,33 @@
 'use client';
 
 import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
-import { FunctionComponent, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { FunctionComponent, use, useEffect, useState } from 'react';
 
 interface SearchFormProps {
   searchValue?: string;
 }
 
 const SearchForm: FunctionComponent<SearchFormProps> = (props) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [searchValue, setSearchValue] = useState(props.searchValue || '');
   const [finalSearchValue, setFinalSearchValue] = useState(props.searchValue || '');
 
-  useUpdateSearchParams([{ key: 'searchValue', value: finalSearchValue }]);
+  const { searchValue: updatedSearchValue } = useUpdateSearchParams([{ key: 'searchValue', value: finalSearchValue }]);
 
   const onSearch = (e: any) => {
     if (e.key === 'Enter') {
       setFinalSearchValue(searchValue);
     }
   };
+
+  useEffect(() => {
+    if (updatedSearchValue !== searchParams.toString()) {
+      router.push('/posts?' + updatedSearchValue);
+    }
+  }, [updatedSearchValue]);
 
   return (
     <div className='relative top-2 max-w-lg'>

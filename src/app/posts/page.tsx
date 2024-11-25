@@ -5,19 +5,21 @@ import { FunctionComponent } from 'react';
 import SearchForm from '@/components/post/SearchForm';
 
 interface PageProps {
-  searchParams: {
+  searchParams: Promise<{
     page?: string;
     searchValue?: string;
-  };
+  }>;
 }
 
 const POSTS_PER_PAGE = 3;
 
 const Page: FunctionComponent<PageProps> = async ({ searchParams }) => {
-  const page = parseInt(searchParams.page || '1');
+  const currSearchParams = await searchParams;
+
+  const page = parseInt(currSearchParams.page || '1');
   const skip = page * POSTS_PER_PAGE - POSTS_PER_PAGE;
 
-  const searchValue = searchParams.searchValue;
+  const searchValue = currSearchParams.searchValue || '';
 
   const {
     posts = [],
