@@ -27,7 +27,7 @@ const SearchForm: FunctionComponent<SearchFormProps> = (props) => {
     if (updatedSearchValue !== searchParams.toString()) {
       router.push('/posts?' + updatedSearchValue);
     }
-  }, [updatedSearchValue]);
+  }, [updatedSearchValue, router, searchParams]);
 
   return (
     <div className='relative top-2 max-w-lg'>

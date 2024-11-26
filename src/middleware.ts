@@ -1,8 +1,13 @@
-import { auth } from '@/lib/auth';
-import { NextRequest } from 'next/server';
+import NextAuth from 'next-auth';
+import authConfig from '@/lib/auth.config';
 
-export default auth(async function middleware(req: NextRequest) {
-  // Your custom middleware logic goes here
+export const { auth } = NextAuth(authConfig);
+
+export default auth((req) => {
+  if (!req.auth && req.nextUrl.pathname !== '/signin') {
+    const newUrl = new URL('/signin', req.nextUrl.origin);
+    return Response.redirect(newUrl);
+  }
 });
 
 export const config = { matcher: ['/user/:path*', '/api/user/:path*'] };

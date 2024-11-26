@@ -4,12 +4,13 @@ import { notFound } from 'next/navigation';
 import { FunctionComponent } from 'react';
 
 interface AuthorPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-const AuthorPage: FunctionComponent<AuthorPageProps> = async ({ params: { id } }) => {
+const AuthorPage: FunctionComponent<AuthorPageProps> = async ({ params }) => {
+  const { id } = await params;
   const { user, error } = await getUserById(id);
 
   if (error) {

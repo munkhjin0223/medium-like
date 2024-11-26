@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { deletePost, getPostById, updatePost } from '@/lib/prisma/posts';
 
-export async function PUT(request: NextRequest, { params: { id } }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const post = await getPostById(id);
 
   if (!post) {
@@ -15,7 +16,8 @@ export async function PUT(request: NextRequest, { params: { id } }: { params: { 
   return NextResponse.json(updatedPost);
 }
 
-export async function DELETE(_request: NextRequest, { params: { id } }: { params: { id: string } }) {
+export async function DELETE(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const post = await getPostById(id);
 
   if (!post) {

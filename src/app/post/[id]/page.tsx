@@ -4,13 +4,8 @@ import ReactMarkdown from 'react-markdown';
 import { getPostById, getPosts } from '@/lib/prisma/posts';
 import Comment from '@/components/post/Comment';
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-export async function generateMetadata({ params: { id } }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const { post } = await getPostById(id);
 
   return {
@@ -27,7 +22,14 @@ export async function generateStaticParams() {
   }));
 }
 
-const Page: FunctionComponent<PageProps> = async ({ params: { id } }) => {
+interface PageProps {
+  params: Promise<{
+    id: string;
+  }>;
+}
+
+const Page: FunctionComponent<PageProps> = async ({ params }) => {
+  const { id } = await params;
   const { post, error } = await getPostById(id);
 
   if (error) {
